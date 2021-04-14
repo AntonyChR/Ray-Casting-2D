@@ -32,7 +32,7 @@ class Ray:
         x4 = self.focus[0] + self.dir[0]
         y4 = self.focus[1] + self.dir[1]
 
-        #line intersection: https://en.wikipedia.org/wiki/Line-line_intersection
+        #line intersection
         den = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4)
         if den == 0:
             return
@@ -47,6 +47,7 @@ class Ray:
         else:
             return
 
+    
 def main():
     y_height   = GetSystemMetrics(1) - 100 #screen height
     delay      = 0.01
@@ -54,10 +55,14 @@ def main():
     running    = True
     line_color = (255, 255, 255)
     size       = (y_height, y_height)
-    #---------------
-    num_walls  = 7
-    num_rays   = 72 
-    #---------------
+
+    #---------------------
+    num_walls  = 5
+    num_rays   = 120 
+    #---------------------
+    intersections = False 
+    #---------------------
+
     walls = []
     for i in range(num_walls):
         walls.append(Boundary(rm_pt(), rm_pt(), rm_pt(), rm_pt()))
@@ -72,6 +77,7 @@ def main():
         rays.append(Ray(to_rad(i)))
 
     pg.init()
+    pg.display.set_caption("Ray casting")
     screen = pg.display.set_mode(size)
 
     # main loop
@@ -86,11 +92,13 @@ def main():
 
         for ray in rays:
             closest = None
-            aux     = 1e3
+            aux     = 1e4
             for wall in walls:
                 ray.set_posittion(pg.mouse.get_pos())
                 coll_pt = ray.cast(wall)
                 if coll_pt:
+                    if intersections:
+                        pg.draw.circle(screen, line_color, coll_pt, 10, width=1)
                     d = dist(ray.focus, coll_pt)
                     if d < aux:
                         aux = d
