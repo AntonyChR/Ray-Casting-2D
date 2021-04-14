@@ -1,4 +1,4 @@
-#Raycasting 2d with Pygame
+# Raycasting 2d with Pygame
 This is a basic simulation of raycasting in 2D using the [Pygame](https://www.pygame.org/wiki/about "Pygame site") library; you can install this library using pip:
 
 `$pip install pygame`
