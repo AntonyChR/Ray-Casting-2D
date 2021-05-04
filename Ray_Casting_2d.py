@@ -45,7 +45,7 @@ class Ray:
 
             return intersection
         else:
-            return
+            return None
 
     
 def main():
@@ -101,8 +101,7 @@ def main():
                         pg.draw.circle(screen, line_color, coll_pt, 10, width=1)
                     d = dist(ray.focus, coll_pt)
                     if d < aux:
-                        aux = d
-                        closest = coll_pt 
+                        aux, closest = d, coll_pt
                     aux = min(d, aux)
             if closest:
                 pg.draw.line  (screen, line_color, ray.focus, closest, width=1)
